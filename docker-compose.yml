@@ -1,0 +1,49 @@
+services:
+    db:
+        image: postgres:15
+        environment:
+            POSTGRES_DB: fcai_db
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+        restart: always
+
+    api:
+        build:
+            context: ./api
+            dockerfile: Dockerfile
+        volumes:
+            - ./api:/usr/src/api
+        ports:
+            - "8000:8000"
+        depends_on:
+            db:
+                condition: service_healthy
+        restart: always
+
+    app:
+        build:
+            context: ./app
+            dockerfile: Dockerfile
+        volumes:
+            - ./app:/usr/src/app
+            - node_modules:/usr/src/app/node_modules
+        ports:
+            - "3000:3000"
+        stdin_open: true
+        tty: true
+        depends_on:
+            - api
+        restart: always
+
+volumes:
+    postgres_data:
+    node_modules:

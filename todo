@@ -1,0 +1,22 @@
+1- Set up workspace with Docker 🎉(Done)🎉
+    - Open Django REST Framework interface
+        - Watch this: https://www.youtube.com/watch?v=i5JykvxUk_A
+
+    - Open pgAdmin to manage your PostgreSQL database.
+        - Watch this: https://www.youtube.com/watch?v=Hs9Fh1fr5s8
+
+2- Setup github repository 🎉(Done)🎉
+
+3- Start your journey by developing your FACI-learn project ()
+    - Backend ()
+        - Create the database models
+        - Create the serializers
+        - Create the views
+        - Write tests
+        - Document the API
+    - Frontend ()
+        - Learn how the React work and how to connect to the backend
+        - Create the components and pages
+        - Learn React-routes
+        - Write tests
+        - Document

@@ -1,0 +1,51 @@
+name: Testing
+
+on: push
+
+jobs:
+  test_api:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install requirements
+      run: |
+        cd api
+        pip3 install --user -r requirements.txt
+    
+    - name: Run Django unit tests
+      env:
+        USE_SQLITE_FOR_TESTS: true
+      run: |
+        cd api
+        python3 manage.py test
+
+  test_app:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: app/package-lock.json
+    
+    - name: Install dependencies
+      run: |
+        cd app
+        npm ci
+    
+    - name: Run React tests
+      run: |
+        cd app
+        npm test -- --coverage --watchAll=false
+      env:
+        CI: true
