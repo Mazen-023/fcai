@@ -4,17 +4,8 @@ from .models import Course, Module, Content, Enrollment
 
 
 # Create your serializers here.
-class CourseSerializer(serializers.ModelSerializer):
-    def get_extra_kwargs(self):
-        # Make instructor required for POST, but read-only for update
-        extra_kwargs = super().get_extra_kwargs() or {}
-        request = self.context.get('request', None)
-        if request and request.method in ['PUT', 'PATCH']:
-            extra_kwargs['instructor'] = {'read_only': True}
-        else:
-            extra_kwargs['instructor'] = {'required': True}
-        return extra_kwargs
 
+class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = [
@@ -43,4 +34,4 @@ class EnrollmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enrollment
         fields = ['id', 'course', 'student', 'enroll_datetime', 'completed_datetime']
-        read_only_fields = ['id', 'student', 'enroll_datetime', 'completed_datetime']
+        read_only_fields = ['id', 'enroll_datetime', 'completed_datetime']

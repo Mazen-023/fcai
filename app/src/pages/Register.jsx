@@ -22,44 +22,14 @@ function Register() {
   // Access the AuthContext to set userId
   const { setUserId } = useContext(AuthContext);
 
-  // Function to update username
-  function updateUsername(event){
-    setState({
-      ...state,
-      username: event.target.value
-    });
-  }
-
-  // Function to update email
-  function updateEmail(event){
-    setState({
-      ...state,
-      email: event.target.value
-    });
-  }
-
-  // Function to update password
-  function updatePassword(event){
-    setState({
-      ...state,
-      password: event.target.value
-    });
-  }
-
-  // Function to update confirmation
-  function updateConfirmation(event){
-    setState({
-      ...state,
-      confirmation: event.target.value
-    });
-  }
-
-  // Function to update role
-  function updateRole(event){
-    setState({
-      ...state,
-      role: event.target.value
-    });
+  // Function to update fields
+  function updateField(field) {
+    return (event) => {
+      setState({
+        ...state,
+        [field]: event.target.value,
+      });
+    };
   }
 
   // Function to handle form submission
@@ -109,27 +79,27 @@ function Register() {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="username">
             <Form.Label>Username</Form.Label>
-            <Form.Control type="text" placeholder="Enter username" value={state.username} onChange={updateUsername} />
+            <Form.Control type="text" placeholder="Enter username" value={state.username} onChange={updateField('username')} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="email">
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" placeholder="Enter Email" value={state.email} onChange={updateEmail} />
+            <Form.Control type="email" placeholder="Enter Email" value={state.email} onChange={updateField('email')} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="password">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" value={state.password} onChange={updatePassword} />
+            <Form.Control type="password" placeholder="Password" value={state.password} onChange={updateField('password')} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="confirmation">
             <Form.Label>Confirm Password</Form.Label>
-            <Form.Control type="password" placeholder="confirmation" value={state.confirmation} onChange={updateConfirmation} />
+            <Form.Control type="password" placeholder="confirmation" value={state.confirmation} onChange={updateField('confirmation')} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="role">
             <Form.Label>Role</Form.Label>
-            <Form.Select value={state.role} onChange={updateRole}>
+            <Form.Select value={state.role} onChange={updateField('role')}>
               <option value="" disabled>Select Role</option>
               <option value="student">Student</option>
               <option value="teacher">Teacher</option>

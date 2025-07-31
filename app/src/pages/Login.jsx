@@ -19,20 +19,15 @@ function Login() {
   // Access the AuthContext to set userId
   const { setUserId } = useContext(AuthContext);
 
-  // Function to update username
-  function updateUsername(event){
-    setState({
-      ...state,
-      username: event.target.value,
-    });
-  }
 
-  // Function to update password
-  function updatePassword(event){
-    setState({
-      ...state,
-      password: event.target.value,
-    });
+  // Function to update fields
+  function updateField(field) {
+    return (event) => {
+      setState({
+        ...state,
+        [field]: event.target.value,
+      });
+    };
   }
 
   // Function to handle form submission
@@ -80,12 +75,12 @@ function Login() {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="username">
             <Form.Label>Username</Form.Label>
-            <Form.Control type="text" placeholder="Enter username" value={state.username} onChange={updateUsername} />
+            <Form.Control type="text" placeholder="Enter username" value={state.username} onChange={updateField('username')} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="password">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" value={state.password} onChange={updatePassword} />
+            <Form.Control type="password" placeholder="Password" value={state.password} onChange={updateField('password')} />
           </Form.Group>
 
           {state.error && <p className="text-danger">{state.error}</p>}
