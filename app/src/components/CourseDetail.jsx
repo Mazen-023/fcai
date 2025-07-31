@@ -1,34 +1,42 @@
+
 import { useEffect, useState } from "react";
 import CourseEnrollments from "./CourseEnrollments";
 
 export default function CourseDetail({ courseId }) {
-  const [course, setCourse] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [instructorName, setInstructorName] = useState("");
+  const [state, setState] = useState({
+    course: null,
+    loading: true,
+    instructorName: "",
+  });
 
+  const updateField = (field, value) => {
+    setState(prev => ({ ...prev, [field]: value }));
+  };
+
+  // Fetch course and instructor
   useEffect(() => {
     fetch(`http://localhost:8000/courses/courses/${courseId}/`)
       .then(res => res.json())
       .then(data => {
-        setCourse(data);
-        setLoading(false);
+        updateField('course', data);
+        updateField('loading', false);
         // Fetch instructor username if needed
         if (data && data.instructor && typeof data.instructor === 'number') {
-            fetch(`http://localhost:8000/accounts/register/`)
+          fetch(`http://localhost:8000/accounts/register/`)
             .then(res => res.json())
             .then(users => {
               const instructor = users.find(u => u.id === data.instructor);
-              setInstructorName(instructor ? instructor.username : data.instructor);
+              updateField('instructorName', instructor ? instructor.username : data.instructor);
             })
-            .catch(() => setInstructorName(data.instructor));
+            .catch(() => updateField('instructorName', data.instructor));
         } else if (data && data.instructor && data.instructor.username) {
-          setInstructorName(data.instructor.username);
+          updateField('instructorName', data.instructor.username);
         }
       });
   }, [courseId]);
 
-  if (loading) return <div className="text-center py-4">Loading course...</div>;
-  if (!course || course.error) return <div className="alert alert-danger">Course not found.</div>;
+  if (state.loading) return <div className="text-center py-4">Loading course...</div>;
+  if (!state.course || state.course.error) return <div className="alert alert-danger">Course not found.</div>;
 
   return (
     <div className="container-fluid">
@@ -41,14 +49,14 @@ export default function CourseDetail({ courseId }) {
                 className="flex-fill bg-white rounded border p-4"
                 style={{ minWidth: 0 }}
               >
-                <h2 className="fw-bold mb-2">{course.title}</h2>
+                <h2 className="fw-bold mb-2">{state.course.title}</h2>
                 <p className="mb-1 text-muted">
-                  <strong>University:</strong> {course.university}
+                  <strong>University:</strong> {state.course.university}
                 </p>
                 <p className="mb-1 text-muted">
-                  <strong>Duration:</strong> {course.duration}
+                  <strong>Duration:</strong> {state.course.duration}
                 </p>
-                <p className="mb-3">{course.description}</p>
+                <p className="mb-3">{state.course.description}</p>
               </section>
 
               <aside
@@ -56,14 +64,14 @@ export default function CourseDetail({ courseId }) {
                 style={{ minWidth: 260, maxWidth: 320 }}
               >
                 <img
-                  src={course.imgURL}
-                  alt={course.title}
+                  src={state.course.imgURL}
+                  alt={state.course.title}
                   className="img-fluid rounded mb-3"
                   style={{ objectFit: 'cover', width: '100%', maxWidth: 220, maxHeight: 180 }}
                 />
-                <h5 className="mb-2">${course.price}</h5>
+                <h5 className="mb-2">${state.course.price}</h5>
                 <p className="mb-2">
-                  <strong>Instructor:</strong> {instructorName || course.instructor}
+                  <strong>Instructor:</strong> {state.instructorName || state.course.instructor}
                 </p>
                 <CourseEnrollments
                   courseId={courseId}

@@ -2,26 +2,32 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function CourseList() {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [state, setState] = useState({
+    courses: [],
+    loading: true,
+  });
+
+  const updateField = (field, value) => {
+    setState(prev => ({ ...prev, [field]: value }));
+  };
 
   useEffect(() => {
     fetch("http://localhost:8000/courses/courses")
       .then(res => res.json())
       .then(data => {
-        setCourses(data.courses || []);
-        setLoading(false);
+        updateField('courses', data.courses || []);
+        updateField('loading', false);
       });
   }, []);
 
-  if (loading) return <div>Loading courses...</div>;
-  if (!courses.length) return <div>No courses found.</div>;
+  if (state.loading) return <div>Loading courses...</div>;
+  if (!state.courses.length) return <div>No courses found.</div>;
 
   return (
     <div className="container my-4">
       <h2 className="mb-4">Courses</h2>
       <div className="row row-cols-1 row-cols-md-3 g-4">
-        {courses.map(course => (
+        {state.courses.map(course => (
           <div className="col" key={course.id}>
             <div className="card h-100 shadow-sm">
               <img src={course.imgURL} alt={course.title} className="card-img-top" style={{ objectFit: 'cover', height: '180px' }} />

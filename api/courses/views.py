@@ -130,8 +130,6 @@ def enrollment_list(request):
         return Response({'enrollments': serializer.data})
     elif request.method == 'POST':
         data = request.data.copy()
-        if request.user.is_authenticated:
-            data['student'] = request.user.id
         serializer = EnrollmentSerializer(data=data)
         if serializer.is_valid():
             serializer.save()

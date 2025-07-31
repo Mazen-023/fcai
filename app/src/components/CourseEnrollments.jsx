@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -19,7 +17,9 @@ export default function CourseEnrollments({ courseId, render }) {
     setState(prev => ({ ...prev, [field]: value }));
   };
 
-  useEffect(() => {
+
+  // Fetch enrollments and update state
+  const fetchEnrollments = () => {
     fetch(`http://localhost:8000/courses/enrollments/`)
       .then(res => res.json())
       .then(data => {
@@ -32,6 +32,10 @@ export default function CourseEnrollments({ courseId, render }) {
           loading: false,
         }));
       });
+  };
+
+  useEffect(() => {
+    fetchEnrollments();
   }, [courseId, userId]);
 
   const handleEnroll = () => {
@@ -47,8 +51,7 @@ export default function CourseEnrollments({ courseId, render }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include',
-      body: JSON.stringify({ course: courseId }),
+      body: JSON.stringify({ course: courseId, student: userId }),
     })
       .then(response => {
         if (!response.ok) {
@@ -59,6 +62,7 @@ export default function CourseEnrollments({ courseId, render }) {
       .then(() => {
         updateField('isEnrolled', true);
         updateField('showModal', false);
+        fetchEnrollments();
       })
       .catch((error) => {
         updateField('error', error.message);
@@ -111,7 +115,6 @@ export default function CourseEnrollments({ courseId, render }) {
       >
         {state.isEnrolled ? 'Enrolled' : 'Enroll Now'}
       </button>
-      {state.isEnrolled && <div className="alert alert-success mt-2">You are enrolled in this course.</div>}
     </>
   );
 }
