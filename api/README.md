@@ -1,12 +1,19 @@
 # FCAI Learning Platform API Documentation
 
-This API provides endpoints for managing users, courses, projects (assignments, questions, answers, grades), and enrollments for an online learning platform.
+This API provides endpoints for managing users, courses, projects, and enrollments for an online learning platform.
 
 ---
 
-## Authentication
-- Most endpoints require authentication via session or token.
-- Register and login via the `accounts` app endpoints.
+## Project Structure
+
+This project follows the standard Django REST Framework (DRF) architecture. The codebase is organized into multiple Django apps, each responsible for a specific domain (e.g., accounts, courses, projects). Each app typically contains:
+
+- **models.py**: Defines the database schema using Django models.
+- **serializers.py**: Translates model instances to and from JSON representations.
+- **views.py**: Implements API logic using DRF views or viewsets.
+- **urls.py**: Maps endpoints to their corresponding views.
+
+This modular structure promotes maintainability and scalability, allowing each app to encapsulate its functionality and API endpoints.
 
 ---
 
@@ -62,6 +69,8 @@ This API provides endpoints for managing users, courses, projects (assignments, 
 - `POST /projects/grades/` — Create grade
 - `GET /projects/grades/<id>/` — Grade detail
 
+---
+
 ## Notes
 - All endpoints return JSON.
 GET /courses/courses/
@@ -85,4 +94,4 @@ GET /courses/courses/
     ]
 }
 
-- For full details, see the code and serializers in each app.
+- For full details, see the urls and serializers in each app.

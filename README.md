@@ -24,7 +24,7 @@ A modern Learning Management System (LMS) designed to streamline course manageme
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Mazen-023/fcai
    cd fcai
    ```
 
@@ -82,8 +82,11 @@ docker-compose exec app npm test -- --watchAll=false
 
 ```
 fcai/
+├── .github/workflows/     # CI/CD pipelines
 ├── api/                    # Django backend
 │   ├── courses/           # Main app
+│   ├── projects/          # Projects app
+│   ├── accounts/          # Accounts app
 │   ├── fcai/             # Project settings
 │   ├── requirements.txt   # Python dependencies
 │   ├── Dockerfile        # Backend container
@@ -93,7 +96,6 @@ fcai/
 │   ├── package.json      # Node dependencies
 │   ├── Dockerfile        # Frontend container
 │   └── README.md         # Frontend documentation
-├── .github/workflows/     # CI/CD pipelines
 ├── docker-compose.yml     # Multi-container setup
 └── README.md             # This file
 ```
@@ -102,11 +104,3 @@ fcai/
 - [Backend README](api/README.md)
 
 - [Frontend README](app/README.md)
-
-## 🔍 Troubleshooting
-
-### Common Issues
-
-1. **Port conflicts**: Make sure ports 3000, 8000, and 5432 are available
-2. **Database connection**: Wait for PostgreSQL to fully start before Django
-3. **CORS issues**: Make sure django-cors-headers is properly configured
