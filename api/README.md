@@ -1,19 +1,18 @@
 # FCAI Learning Platform API Documentation
 
-This API provides endpoints for managing users, courses, projects, and enrollments for an online learning platform.
+This API provides endpoints for managing accounts, courses, and projects for an online learning platform.
 
 ---
 
 ## Project Structure
 
-This project follows the standard Django REST Framework (DRF) architecture. The codebase is organized into multiple Django apps, each responsible for a specific domain (e.g., accounts, courses, projects). Each app typically contains:
+This project follows the standard Django REST Framework (DRF) architecture. The codebase is organized into multiple Django apps. Each app contains:
 
 - **models.py**: Defines the database schema using Django models.
 - **serializers.py**: Translates model instances to and from JSON representations.
-- **views.py**: Implements API logic using DRF views or viewsets.
 - **urls.py**: Maps endpoints to their corresponding views.
-
-This modular structure promotes maintainability and scalability, allowing each app to encapsulate its functionality and API endpoints.
+- **views.py**: Implements API logic using DRF views or viewsets.
+- **tests.py**: Contains unit tests for the app's functionality.
 
 ---
 
@@ -26,11 +25,11 @@ This modular structure promotes maintainability and scalability, allowing each a
 - `GET /accounts/profile/` — Get current user profile
 
 ### Courses
-- `GET /courses/` — List all courses (public)
-- `POST /courses/` — Create a new course (authenticated)
-- `GET /courses/<id>/` — Get course detail (authenticated)
-- `PUT /courses/<id>/` — Update course (owner only)
-- `DELETE /courses/<id>/` — Delete course (owner only)
+- `GET /courses/` — List all courses
+- `POST /courses/` — Create a new course
+- `GET /courses/<id>/` — Get course detail
+- `PUT /courses/<id>/` — Update course
+- `DELETE /courses/<id>/` — Delete course
 
 #### Modules
 - `GET /courses/modules/` — List modules
@@ -74,7 +73,6 @@ This modular structure promotes maintainability and scalability, allowing each a
 ## Notes
 - All endpoints return JSON.
 - For full details, see the urls and serializers in each app.
-- Example response for listing courses:
 
 ---
 ### Example Response for Listing Courses
@@ -86,7 +84,7 @@ This modular structure promotes maintainability and scalability, allowing each a
         {
             "id": 1,
             "title": "CS50's Introduction to Computer Science",
-            "description": "This is CS50, Harvard University’s introduction to the intellectual enterprises of computer science and the art of programming, for concentrators and non-concentrators alike, with or without prior programming experience. (Two thirds of CS50 students have never taken CS before.) This course teaches you how to solve problems, both with and without code, with an emphasis on correctness, design, and style. Topics include computational thinking, abstraction, algorithms, data structures, and computer science more generally. Problem sets inspired by the arts, humanities, social sciences, and sciences. More than teach you how to program in one language, this course teaches you how to program fundamentally and how to teach yourself new languages ultimately. The course starts with a traditional but omnipresent language called C that underlies today’s newer languages, via which you’ll learn not only about functions, variables, conditionals, loops, and more, but also about how computers themselves work underneath the hood, memory and all. The course then transitions to Python, a higher-level language that you’ll understand all the more because of C. Toward term’s end, the course introduces SQL, via which you can store data in databases, along with HTML, CSS, and JavaScript, via which you can create web and mobile apps alike. Course culminates in a final project.",
+            "description": "This is CS50, Harvard University’s introduction to the intellectual enterprises of computer science and the art of programming, for concentrators and non-concentrators alike, with or without prior programming experience.",
             "imgURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg72cAl3BNikUaU3UB8XhRa-f3sLyqzZLdMHfu4DY2epS5RnjhSCqiXPWavlYzgnj0ou0&usqp=CAU",
             "price": "0.00",
             "university": "Harvard",
