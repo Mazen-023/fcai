@@ -1,5 +1,9 @@
-function Courses() {
-  return <h1>Courses Page</h1>;
-}
+import CourseList from "../components/CourseList";
 
-export default Courses;
+export default function Courses() {
+  return (
+    <>
+      <CourseList />
+    </>
+  );
+}

@@ -23,7 +23,7 @@ class CourseListDetailView(APIView):
         # List is public, detail is authenticated only
         if self.request.method == 'GET':
             if self.kwargs.get('pk') is not None:
-                return [IsAuthenticated()]
+                return [AllowAny()]
             else:
                 return [AllowAny()]
         elif self.request.method == 'POST':
@@ -209,7 +209,9 @@ class EnrollmentListDetailView(APIView):
             return Response(serializer.data)
 
     def post(self, request, pk=None):
-        serializer = EnrollmentSerializer(data=request.data)
+        data = request.data.copy()
+        data['student'] = request.user.id  # Always use the logged-in user
+        serializer = EnrollmentSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

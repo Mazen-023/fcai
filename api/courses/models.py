@@ -32,6 +32,9 @@ class Module(models.Model):
     def __str__(self):
         return f"{self.title} ({self.course.title})"
 
+    class Meta:
+        ordering = ['order']
+
 
 class Content(models.Model):
     title = models.CharField(max_length=255)
@@ -42,6 +45,10 @@ class Content(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.module.title})"
+    
+    class Meta:
+        ordering = ['order']
+
 
 
 class Enrollment(models.Model):

@@ -1,5 +1,9 @@
-function Create() {
-  return <h1>Create Course Page</h1>;
-}
+import CourseForm from "../components/CourseForm";
 
-export default Create;
+export default function Create() {
+  return (
+    <div>
+      <CourseForm />
+    </div>
+  );
+}
