@@ -73,8 +73,14 @@ This modular structure promotes maintainability and scalability, allowing each a
 
 ## Notes
 - All endpoints return JSON.
-GET /courses/courses/
+- For full details, see the urls and serializers in each app.
+- Example response for listing courses:
 
+---
+### Example Response for Listing Courses
+`GET /courses/courses`
+
+```json
 {
     "courses": [
         {
@@ -90,8 +96,7 @@ GET /courses/courses/
             "created_at": "2025-07-31T02:35:17.246021Z",
             "updated_at": "2025-07-31T03:04:41.528361Z",
             "instructor": 1
-        }
+        },
     ]
 }
-
-- For full details, see the urls and serializers in each app.
+```
