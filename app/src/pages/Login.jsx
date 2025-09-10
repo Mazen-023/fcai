@@ -1,7 +1,6 @@
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
-import { apiService } from '../services/api';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
@@ -32,22 +31,39 @@ function Login() {
   }
 
   // Function to handle form submission
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
       event.preventDefault();
 
-      try {
-        const data = await apiService.login(state.username, state.password);
-        
+      // Send data to server via Fetch API
+      fetch('http://localhost:8000/accounts/login/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(
+            { 
+              username: state.username, 
+              password: state.password 
+            }),
+      })
+      .then(response => {
+        if (!response.ok) {
+            throw new Error('Login failed');
+        }
+        return response.json();
+      })
+      .then(data => {
         setUserId(data.id);
-        localStorage.setItem('id', data.id);
+        localStorage.setItem('id', data['id']);
         navigate('/');
-        console.log(data.message);
-      } catch (error) {
+        console.log(data['message']);
+      })
+      .catch((error) => {
         setState({
           ...state,
           error: error.message,
         });
-      }
+      });
   }
 
   return (

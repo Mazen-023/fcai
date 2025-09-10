@@ -143,13 +143,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.User'
 
-# Session configuration
-SESSION_COOKIE_AGE = 86400  # 1 day in seconds
-SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = 'Lax'
-SESSION_SAVE_EVERY_REQUEST = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-
 # A list of origins that are authorized to make cross-site HTTP requests
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [

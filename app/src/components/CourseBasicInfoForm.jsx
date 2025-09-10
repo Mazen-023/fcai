@@ -32,11 +32,9 @@ export default function CourseBasicInfoForm({ onSuccess }) {
       body: JSON.stringify({
         title: state.title,
         description: state.description,
-        imgURL: state.imgUrl,
+        imgUrl: state.imgUrl,
         price: state.price,
         duration: state.duration,
-        instructor: 1, // TODO: Get from auth context
-        university: 'FCAI', // TODO: Make dynamic
       }),
     })
     .then((res) => {

@@ -42,7 +42,6 @@ function Register() {
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include', // Include cookies for session management
       body: JSON.stringify({
         username: state.username,
         email: state.email,

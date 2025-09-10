@@ -51,7 +51,6 @@ export default function CourseEnrollments({ courseId, render }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include', // Include cookies for session management
       body: JSON.stringify({ course: courseId, student: userId }),
     })
       .then(response => {
