@@ -1,8 +1,9 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthContext } from './contexts/AuthContext';
+import { apiService } from './services/api';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Layout from './pages/Layout';
 import Register from './pages/Register';
@@ -18,6 +19,38 @@ import NotFound from './pages/NotFound';
 
 function App() {
   const [userId, setUserId] = useState(() => localStorage.getItem('id'));
+  const [authChecked, setAuthChecked] = useState(false);
+
+  // Verify authentication status on app startup
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('id');
+    if (storedUserId) {
+      // Verify the session is still valid by calling profile endpoint
+      apiService.getProfile()
+        .then(() => {
+          setUserId(storedUserId);
+        })
+        .catch(() => {
+          // Session expired, clear local storage
+          localStorage.removeItem('id');
+          setUserId(null);
+        })
+        .finally(() => {
+          setAuthChecked(true);
+        });
+    } else {
+      setAuthChecked(true);
+    }
+  }, []);
+
+  // Show loading until auth check is complete
+  if (!authChecked) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <AuthContext.Provider value={{ userId, setUserId }}>

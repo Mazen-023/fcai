@@ -29,7 +29,12 @@ def login_view(request):
     # Check if authentication successful
     if user is not None:
         login(request, user)
-        return Response({"message": "Login successful", "id": user.id}, status=status.HTTP_200_OK)
+        return Response({
+            "message": "Login successful", 
+            "id": user.id,
+            "username": user.username,
+            "role": user.role
+        }, status=status.HTTP_200_OK)
     return Response({"message": "Invalid credentials"}, status=status.HTTP_404_NOT_FOUND)
 
 

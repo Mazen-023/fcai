@@ -1,6 +1,7 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { apiService } from "../services/api";
 import Dropdown from 'react-bootstrap/Dropdown';
 
 
@@ -8,11 +9,18 @@ function Layout() {
   const navigate = useNavigate();
   const { userId, setUserId } = useContext(AuthContext);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     if (userId) {
-      localStorage.removeItem('id');
-      setUserId(null);
-      navigate('/login');
+      try {
+        await apiService.logout();
+      } catch (error) {
+        console.error('Logout error:', error);
+      } finally {
+        // Always clear client-side state
+        localStorage.removeItem('id');
+        setUserId(null);
+        navigate('/login');
+      }
     }
   };
 
