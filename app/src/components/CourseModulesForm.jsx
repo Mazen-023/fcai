@@ -23,14 +23,16 @@ export default function CourseModulesForm({ courseId, onFinish }) {
   const handleAddModule = (event) => {
     event.preventDefault();
     setState({ ...state, error: '', success: '' });
-    fetch(`http://localhost:8000/courses/${courseId}/modules/`, {
+    fetch(`http://localhost:8000/courses/modules/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: state.name,
+        title: state.name,
         description: state.description,
+        course: courseId,
+        order: modules.length + 1,
       }),
     })
     .then((res) => {
@@ -76,7 +78,7 @@ export default function CourseModulesForm({ courseId, onFinish }) {
       </Form>
       <ul className="mt-3">
         {modules.map((mod, idx) => (
-          <li key={mod.id || idx}><b>{mod.name}</b>: {mod.description}</li>
+          <li key={mod.id || idx}><b>{mod.title}</b>: {mod.description}</li>
         ))}
       </ul>
       <Button variant="primary" className="mt-4" onClick={onFinish}>Finish</Button>

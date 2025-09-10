@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .models import Course, Module, Content, Enrollment
-from .serializers import CourseSerializer, ModuleSerializer, ContentSerializer, EnrollmentSerializer
+from .serializers import CourseSerializer, CourseDetailSerializer, ModuleSerializer, ContentSerializer, EnrollmentSerializer
 
 
 
@@ -34,7 +34,7 @@ def course_detail(request, pk):
         return Response({'error': 'Course not found'}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = CourseSerializer(course)
+        serializer = CourseDetailSerializer(course)
         return Response(serializer.data)
     elif request.method == 'PUT':
         serializer = CourseSerializer(course, data=request.data, partial=True)

@@ -8,9 +8,11 @@ from rest_framework.views import APIView
 from .models import Assignment, Question, Answer, Grade
 from .serializers import (
     AssignmentSerializer,
+    AssignmentDetailSerializer,
     QuestionSerializer,
     AnswerSerializer,
-    GradeSerializer
+    GradeSerializer,
+    StudentAnswerSerializer
 )
 from courses.utils import IsCourseOwnerOrReadOnly, IsStudentOrReadOnly
 
@@ -40,7 +42,7 @@ class AssignmentListDetailView(APIView):
                 assignment = Assignment.objects.get(pk=pk)
             except Assignment.DoesNotExist:
                 return Response({'error': 'Assignment not found'}, status=status.HTTP_404_NOT_FOUND)
-            serializer = AssignmentSerializer(assignment)
+            serializer = AssignmentDetailSerializer(assignment)
             return Response(serializer.data)
 
     def post(self, request, pk=None):
@@ -230,3 +232,58 @@ class GradeListDetailView(APIView):
             return Response({'error': 'Grade not found'}, status=status.HTTP_404_NOT_FOUND)
         grade.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class SubmitAssignmentView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, assignment_id):
+        """Submit assignment answers and calculate grade"""
+        try:
+            assignment = Assignment.objects.get(pk=assignment_id)
+        except Assignment.DoesNotExist:
+            return Response({'error': 'Assignment not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Check if student already has a grade for this assignment
+        if Grade.objects.filter(student=request.user, assignment=assignment).exists():
+            return Response({'error': 'Assignment already submitted'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Validate answers format
+        answers_data = request.data.get('answers', [])
+        if not answers_data:
+            return Response({'error': 'No answers provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Calculate score
+        total_questions = assignment.questions.count()
+        if total_questions == 0:
+            return Response({'error': 'Assignment has no questions'}, status=status.HTTP_400_BAD_REQUEST)
+
+        correct_answers = 0
+        for answer_data in answers_data:
+            try:
+                question = Question.objects.get(id=answer_data.get('question_id'), assignment=assignment)
+                correct_answer = Answer.objects.filter(question=question, is_correct=True).first()
+                
+                if correct_answer and correct_answer.correct_answer.lower().strip() == answer_data.get('answer_text', '').lower().strip():
+                    correct_answers += 1
+            except Question.DoesNotExist:
+                continue
+
+        # Calculate percentage score
+        score = (correct_answers / total_questions) * 100
+
+        # Create grade record
+        grade = Grade.objects.create(
+            student=request.user,
+            assignment=assignment,
+            score=score
+        )
+
+        serializer = GradeSerializer(grade)
+        return Response({
+            'grade': serializer.data,
+            'correct_answers': correct_answers,
+            'total_questions': total_questions,
+            'passed': score >= assignment.min_pass_score
+        }, status=status.HTTP_201_CREATED)

@@ -12,6 +12,8 @@ import Home from './pages/Home';
 import Courses from './pages/Courses';
 import Details from './pages/Details';
 import Create from './pages/Create';
+import Assignments from './pages/Assignments';
+import AssignmentDetailPage from './pages/AssignmentDetailPage';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -24,11 +26,13 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="courses" element={<Courses />} />
+            <Route path="assignments" element={<Assignments />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route element={<ProtectedRoute />}>
               <Route path="courses/:courseId" element={<Details />} />
               <Route path="courses/create" element={<Create />} />
+              <Route path="assignments/:assignmentId" element={<AssignmentDetailPage />} />
               <Route path="profile" element={<Profile />} />
             </Route>
             <Route path="*" element={<NotFound />} />

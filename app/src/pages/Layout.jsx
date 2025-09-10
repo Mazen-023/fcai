@@ -21,7 +21,8 @@ function Layout() {
       <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <Link to="/">Home</Link> |{" "}
-          <Link to="/courses">Courses</Link>
+          <Link to="/courses">Courses</Link> |{" "}
+          <Link to="/assignments">Assignments</Link>
         </div>
         <div>
           {userId ? (

@@ -1,37 +1,30 @@
 
 import { useEffect, useState } from "react";
 import CourseEnrollments from "./CourseEnrollments";
+import Card from 'react-bootstrap/Card';
+import Badge from 'react-bootstrap/Badge';
 
 export default function CourseDetail({ courseId }) {
   const [state, setState] = useState({
     course: null,
     loading: true,
-    instructorName: "",
   });
 
   const updateField = (field, value) => {
     setState(prev => ({ ...prev, [field]: value }));
   };
 
-  // Fetch course and instructor
+  // Fetch course details with modules
   useEffect(() => {
     fetch(`http://localhost:8000/courses/courses/${courseId}/`)
       .then(res => res.json())
       .then(data => {
         updateField('course', data);
         updateField('loading', false);
-        // Fetch instructor username if needed
-        if (data && data.instructor && typeof data.instructor === 'number') {
-          fetch(`http://localhost:8000/accounts/register/`)
-            .then(res => res.json())
-            .then(users => {
-              const instructor = users.find(u => u.id === data.instructor);
-              updateField('instructorName', instructor ? instructor.username : data.instructor);
-            })
-            .catch(() => updateField('instructorName', data.instructor));
-        } else if (data && data.instructor && data.instructor.username) {
-          updateField('instructorName', data.instructor.username);
-        }
+      })
+      .catch(error => {
+        console.error('Error fetching course:', error);
+        updateField('loading', false);
       });
   }, [courseId]);
 
@@ -56,7 +49,46 @@ export default function CourseDetail({ courseId }) {
                 <p className="mb-1 text-muted">
                   <strong>Duration:</strong> {state.course.duration}
                 </p>
+                <p className="mb-1 text-muted">
+                  <strong>Instructor:</strong> {state.course.instructor_name}
+                </p>
                 <p className="mb-3">{state.course.description}</p>
+
+                {/* Course Modules */}
+                {state.course.modules && state.course.modules.length > 0 && (
+                  <div className="mt-4">
+                    <h4>Course Modules</h4>
+                    <div className="row">
+                      {state.course.modules.map(module => (
+                        <div key={module.id} className="col-md-6 mb-3">
+                          <Card>
+                            <Card.Header>
+                              <h6 className="mb-0">
+                                Module {module.order}: {module.title}
+                              </h6>
+                            </Card.Header>
+                            <Card.Body>
+                              <p className="text-muted small mb-2">{module.description}</p>
+                              {module.contents && module.contents.length > 0 && (
+                                <div>
+                                  <small className="text-muted">Contents:</small>
+                                  <ul className="list-unstyled mt-1">
+                                    {module.contents.map(content => (
+                                      <li key={content.id} className="small">
+                                        <Badge bg="secondary" className="me-1">{content.type}</Badge>
+                                        {content.title}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                            </Card.Body>
+                          </Card>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </section>
 
               <aside
@@ -71,14 +103,14 @@ export default function CourseDetail({ courseId }) {
                 />
                 <h5 className="mb-2">${state.course.price}</h5>
                 <p className="mb-2">
-                  <strong>Instructor:</strong> {state.instructorName || state.course.instructor}
+                  <strong>Instructor:</strong> {state.course.instructor_name}
                 </p>
                 <CourseEnrollments
                   courseId={courseId}
                   render={({ isEnrolled, handleEnroll, enrollments }) => (
                     <div className="w-100">
                       <div className="mb-2 text-center">
-                        <strong>Enrolled Students:</strong> {enrollments.length}
+                        <strong>Enrolled Students:</strong> {state.course.enrollment_count || enrollments.length}
                       </div>
                       <button
                         className="btn btn-primary w-100"
