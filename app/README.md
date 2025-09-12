@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# FCAI Learning Platform Frontend Documentation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This React application provides the user interface for the FCAI Learning Platform, allowing students and instructors to interact with courses, modules, and learning materials.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Project Structure
 
-### `npm start`
+The frontend is built with React and follows a component-based architecture:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+app/
+├── public/            # Static files
+├── src/               # Source code
+│   ├── components/    # Reusable UI components
+│   ├── contexts/      # React context providers
+│   ├── pages/         # Page components
+│   └── routes/        # Routing configuration
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Routes Overview
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Authentication
+- `/register` — Create a new account
+- `/login` — Log into the system
+- `/profile` — View and manage user profile
 
-### `npm run build`
+### Courses
+- `/` — Home page with featured courses
+- `/courses` — Browse all available courses
+- `/courses/:courseId` — View course details and modules
+- `/courses/create` — Create a new course (instructors only)
+- `/courses/:courseId/edit` — Edit course information and modules (instructors only)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Key Components
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Authentication
+- `AuthContext.jsx` — Manages authentication state
+- `ProtectedRoute.jsx` — Guards routes that require authentication
 
-### `npm run eject`
+### Course Management
+- `CourseList.jsx` — Displays course catalog
+- `CourseDetail.jsx` — Shows detailed course information
+- `CourseModulesForm.jsx` — Interface for managing modules
+- `ModuleManager.jsx` — CRUD operations for course modules
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### User Interface
+- `InstructorCourses.jsx` — Displays instructor's created courses
+- `CourseEnrollments.jsx` — Handles student enrollment functionality
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## User Roles
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Students
+- Browse and enroll in courses
+- View course materials and modules
+- Submit solutions to problems
+- Receive feedback on submissions
 
-## Learn More
+### Instructors
+- Create and manage courses
+- Add and organize course modules
+- Create problems and assignments
+- Review student submissions
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Responsive Design
 
-### Code Splitting
+The application is fully responsive using:
+- Bootstrap 5 grid system and components
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---

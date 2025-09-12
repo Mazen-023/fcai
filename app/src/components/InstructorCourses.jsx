@@ -66,7 +66,7 @@ function InstructorCourses() {
                 </div>
               </div>
               <div className="card-footer text-muted">
-                <small>{course.university} · {course.duration}</small>
+                <small>{course.university}</small>
               </div>
             </div>
           </div>

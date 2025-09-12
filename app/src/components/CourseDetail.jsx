@@ -96,11 +96,10 @@ export default function CourseDetail({ courseId }) {
                         <strong>Enrolled Students:</strong> {enrollments.length}
                       </div>
                       <button
-                        className="btn btn-primary w-100"
+                        className={`btn ${isEnrolled ? 'btn-outline-danger' : 'btn-primary'} w-100`}
                         onClick={handleEnroll}
-                        disabled={isEnrolled}
                       >
-                        {isEnrolled ? 'Enrolled' : 'Enroll Now'}
+                        {isEnrolled ? 'Unenroll' : 'Enroll Now'}
                       </button>
                     </div>
                   )}
