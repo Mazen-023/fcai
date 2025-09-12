@@ -1,6 +1,6 @@
 # FCAI-Learn
 
-A modern Learning Management System (LMS) designed to streamline course management, student enrollment, and content delivery. Built with Django REST Framework for the backend, React.js for the frontend, and PostgreSQL for data storage, this project enables educators and learners to interact efficiently in a robust, scalable environment.
+A Learning Management System (LMS) designed to streamline course management, student enrollment, and content delivery. Built with Django REST Framework for the backend, React.js for the frontend, and PostgreSQL for data storage.
 
 ## 🚀 Tech Stack
 
@@ -85,7 +85,6 @@ fcai/
 ├── .github/workflows/     # CI/CD pipelines
 ├── api/                    # Django backend
 │   ├── courses/           # Main app
-│   ├── projects/          # Projects app
 │   ├── accounts/          # Accounts app
 │   ├── fcai/             # Project settings
 │   ├── requirements.txt   # Python dependencies
@@ -104,3 +103,7 @@ fcai/
 - [Backend README](api/README.md)
 
 - [Frontend README](app/README.md)
+
+## Distinctiveness and Complexity
+
+This Learning Management System (LMS) is distinctly different from the other projects in CS50 Web. Unlike Project 2 (e-commerce) or Project 4 (social network), it focuses on educational course management with features like instructor-led course creation, student enrollment, and modular content organization. The project is more complex as it integrates a Django REST Framework (DRF) API as the backend for a React.js frontend, utilizing at least one Django model (Course, Module, Content, Enrollment) and JavaScript for dynamic interactions. It follows best practices for testing with GitHub Actions and uses Docker for CI/CD, which are not implemented in the other projects. The application is fully mobile-responsive using Bootstrap.

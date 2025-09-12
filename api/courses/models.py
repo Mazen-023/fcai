@@ -36,21 +36,6 @@ class Module(models.Model):
         ordering = ['order']
 
 
-class Content(models.Model):
-    title = models.CharField(max_length=255)
-    type = models.CharField(max_length=50)  # e.g. 'video', 'pdf', 'text', etc.
-    url = models.URLField(blank=True)
-    order = models.PositiveIntegerField(default=0)
-    module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='contents')
-
-    def __str__(self):
-        return f"{self.title} ({self.module.title})"
-    
-    class Meta:
-        ordering = ['order']
-
-
-
 class Enrollment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
     student = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='enrollments')

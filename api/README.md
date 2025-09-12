@@ -36,11 +36,6 @@ This project follows the standard Django REST Framework (DRF) architecture. The 
 - `POST /courses/modules/` — Create module
 - `GET /courses/modules/<id>/` — Module detail
 
-#### Content
-- `GET /courses/contents/` — List content
-- `POST /courses/contents/` — Create content
-- `GET /courses/contents/<id>/` — Content detail
-
 #### Enrollments
 - `GET /courses/enrollments/` — List enrollments
 - `POST /courses/enrollments/` — Enroll in a course
