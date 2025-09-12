@@ -20,17 +20,32 @@ export default function CourseDetail({ courseId }) {
       .then(data => {
         updateField('course', data);
         updateField('loading', false);
-        // Fetch instructor username if needed
-        if (data && data.instructor && typeof data.instructor === 'number') {
+        
+        // Fetch instructor details by ID
+        if (data && data.instructor) {
+          const instructorId = typeof data.instructor === 'number' 
+            ? data.instructor 
+            : (data.instructor.id || data.instructor);
+            
           fetch(`http://localhost:8000/accounts/register/`)
             .then(res => res.json())
-            .then(users => {
-              const instructor = users.find(u => u.id === data.instructor);
-              updateField('instructorName', instructor ? instructor.username : data.instructor);
+            .then(response => {
+              if (response && response.users && Array.isArray(response.users)) {
+                const instructor = response.users.find(user => user.id === instructorId);
+                if (instructor) {
+                  const instructorName = instructor.username;
+                  updateField('instructorName', instructorName);
+                } else {
+                  updateField('instructorName', 'Unknown Instructor');
+                }
+              }
             })
-            .catch(() => updateField('instructorName', data.instructor));
-        } else if (data && data.instructor && data.instructor.username) {
-          updateField('instructorName', data.instructor.username);
+            .catch(error => {
+              console.error('Error fetching instructor:', error);
+              updateField('instructorName', 'Unknown Instructor');
+            });
+        } else {
+          updateField('instructorName', 'Unknown Instructor');
         }
       });
   }, [courseId]);
@@ -71,7 +86,7 @@ export default function CourseDetail({ courseId }) {
                 />
                 <h5 className="mb-2">${state.course.price}</h5>
                 <p className="mb-2">
-                  <strong>Instructor:</strong> {state.instructorName || state.course.instructor}
+                  <strong>Instructor:</strong> {state.instructorName}
                 </p>
                 <CourseEnrollments
                   courseId={courseId}
