@@ -34,7 +34,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'accounts',
     'courses',
-    'projects',
     'rest_framework',
     'corsheaders',
     'django.contrib.admin',
