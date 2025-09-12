@@ -46,28 +46,6 @@ This project follows the standard Django REST Framework (DRF) architecture. The 
 - `POST /courses/enrollments/` — Enroll in a course
 - `GET /courses/enrollments/<id>/` — Enrollment detail
 
-#### Assignments
-- `GET /projects/assignments/` — List assignments
-- `POST /projects/assignments/` — Create assignment
-- `GET /projects/assignments/<id>/` — Assignment detail
-- `PUT /projects/assignments/<id>/` — Update assignment
-- `DELETE /projects/assignments/<id>/` — Delete assignment
-
-### Questions
-- `GET /projects/questions/` — List questions
-- `POST /projects/questions/` — Create question
-- `GET /projects/questions/<id>/` — Question detail
-
-#### Answers
-- `GET /projects/answers/` — List answers
-- `POST /projects/answers/` — Create answer
-- `GET /projects/answers/<id>/` — Answer detail
-
-#### Grades
-- `GET /projects/grades/` — List grades
-- `POST /projects/grades/` — Create grade
-- `GET /projects/grades/<id>/` — Grade detail
-
 ---
 
 ## Notes

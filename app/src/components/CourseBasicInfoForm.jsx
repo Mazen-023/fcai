@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function CourseBasicInfoForm({ onSuccess }) {
+  const { userId } = useContext(AuthContext);
   const [state, setState] = useState({
     title: '',
     description: '',
-    imgUrl: '',
+    imgURL: '',
     price: '',
+    university: '',
     duration: '',
     error: '',
     success: '',
@@ -32,9 +35,11 @@ export default function CourseBasicInfoForm({ onSuccess }) {
       body: JSON.stringify({
         title: state.title,
         description: state.description,
-        imgUrl: state.imgUrl,
+        imgURL: state.imgURL,
         price: state.price,
+        university: state.university,
         duration: state.duration,
+        instructor: userId,
       }),
     })
     .then((res) => {
@@ -48,8 +53,9 @@ export default function CourseBasicInfoForm({ onSuccess }) {
         ...state,
         title: '',
         description: '',
-        imgUrl: '',
+        imgURL: '',
         price: '',
+        university: '',
         duration: '',
         error: '',
         success: 'Course created successfully!',
@@ -75,13 +81,17 @@ export default function CourseBasicInfoForm({ onSuccess }) {
         <Form.Label>Description</Form.Label>
         <Form.Control as="textarea" placeholder="Description" value={state.description} onChange={updateField('description')} required />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="imgUrl">
+      <Form.Group className="mb-3" controlId="imgURL">
         <Form.Label>Image URL</Form.Label>
-        <Form.Control type="url" placeholder="Image URL" value={state.imgUrl} onChange={updateField('imgUrl')} />
+        <Form.Control type="url" placeholder="Image URL" value={state.imgURL} onChange={updateField('imgURL')} required />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="university">
+        <Form.Label>University</Form.Label>
+        <Form.Control type="text" placeholder="University" value={state.university} onChange={updateField('university')} required />
       </Form.Group>
       <Form.Group className="mb-3" controlId="price">
         <Form.Label>Price</Form.Label>
-        <Form.Control type="number" min="0" step="0.01" placeholder="Price" value={state.price} onChange={updateField('price')} />
+        <Form.Control type="number" min="0" step="0.01" placeholder="Price" value={state.price} onChange={updateField('price')} required />
       </Form.Group>
       <Form.Group className="mb-3" controlId="duration">
         <Form.Label>Duration</Form.Label>

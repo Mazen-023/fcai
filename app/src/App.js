@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import Courses from './pages/Courses';
 import Details from './pages/Details';
 import Create from './pages/Create';
+import CourseEdit from './pages/CourseEdit';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="courses/:courseId" element={<Details />} />
               <Route path="courses/create" element={<Create />} />
+              <Route path="courses/:courseId/edit" element={<CourseEdit />} />
               <Route path="profile" element={<Profile />} />
             </Route>
             <Route path="*" element={<NotFound />} />
