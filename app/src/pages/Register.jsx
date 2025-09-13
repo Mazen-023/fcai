@@ -102,7 +102,7 @@ function Register() {
             <Form.Select value={state.role} onChange={updateField('role')}>
               <option value="" disabled>Select Role</option>
               <option value="student">Student</option>
-              <option value="teacher">Teacher</option>
+              <option value="instructor">Instructor</option>
             </Form.Select>
           </Form.Group>
 
