@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 export default function ModuleManager({ courseId }) {

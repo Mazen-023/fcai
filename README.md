@@ -9,7 +9,7 @@ A Learning Management System (LMS) designed to streamline course management, stu
 - **Database**: PostgreSQL
 - **Containerization**: Docker & Docker Compose
 - **CI/CD**: GitHub Actions
-- **Testing**: Django Test Framework & Jest/React Testing Library
+- **Testing**: Django Test Framework & React Testing Library
 
 ## 📋 Prerequisites
 
@@ -46,6 +46,7 @@ cd api
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
+python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver 8000
 ```
@@ -106,4 +107,4 @@ fcai/
 
 ## Distinctiveness and Complexity
 
-This Learning Management System (LMS) is distinctly different from the other projects in CS50 Web. Unlike Project 2 (e-commerce) or Project 4 (social network), it focuses on educational course management with features like instructor-led course creation, student enrollment, and modular content organization. The project is more complex as it integrates a Django REST Framework (DRF) API as the backend for a React.js frontend, utilizing at least one Django model (Course, Module, Content, Enrollment) and JavaScript for dynamic interactions. It follows best practices for testing with GitHub Actions and uses Docker for CI/CD, which are not implemented in the other projects. The application is fully mobile-responsive using Bootstrap.
+This Learning Management System (LMS) is distinctly different from the other projects in CS50 Web. Unlike Project 2 (e-commerce) or Project 4 (social network), it focuses on educational course management with features like instructor-led course creation, and student enrollment. The project is more complex as it integrates a Django REST Framework (DRF) API as the backend for a React.js frontend, utilizing Django models (Course, Module, Enrollment) and JavaScript for dynamic interactions. It follows best practices for testing with GitHub Actions and uses Docker for CI/CD, which are not implemented in the other projects. The application is fully mobile-responsive using Bootstrap.

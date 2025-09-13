@@ -58,15 +58,11 @@ app/
 
 ### Students
 - Browse and enroll in courses
-- View course materials and modules
-- Submit solutions to problems
-- Receive feedback on submissions
+- View course modules
 
 ### Instructors
 - Create and manage courses
 - Add and organize course modules
-- Create problems and assignments
-- Review student submissions
 
 ---
 

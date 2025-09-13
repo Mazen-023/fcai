@@ -14,34 +14,39 @@ class Course(models.Model):
     gated = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    instructor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='courses')
+    instructor = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="courses"
+    )
 
     def __str__(self):
         return self.title
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
 
 class Module(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     order = models.PositiveIntegerField(default=0)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='modules')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="modules")
 
     def __str__(self):
         return f"{self.title} ({self.course.title})"
 
     class Meta:
-        ordering = ['order']
+        ordering = ["order"]
 
 
 class Enrollment(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
-    student = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='enrollments')
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, related_name="enrollments"
+    )
+    student = models.ForeignKey(
+        "accounts.User", on_delete=models.CASCADE, related_name="enrollments"
+    )
     enroll_datetime = models.DateTimeField(auto_now_add=True)
     completed_datetime = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.student.username} in {self.course.title}"
-    

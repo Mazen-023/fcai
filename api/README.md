@@ -1,6 +1,6 @@
 # FCAI Learning Platform API Documentation
 
-This API provides endpoints for managing accounts, courses, and projects for an online learning platform.
+This API provides endpoints for managing accounts, and courses for an online learning platform.
 
 ---
 
